@@ -891,251 +891,121 @@ button:hover {
   pointer-events: none;
 }
 
-/* Mobile First Approach */
-@media screen and (max-width: 768px) {
+/* Student Dashboard */
+
+
+/* my profile query */
+
+/* Profile Page Specific Responsive Styles */
+@media (max-width: 1024px) {
+  /* Sidebar adjustments */
   .flex.min-h-screen {
     flex-direction: column;
   }
 
   aside.w-72 {
-    width: 100%;
     position: static;
+    width: 100%;
     height: auto;
   }
 
-  main.flex-1 {
+  /* Main content adjustments */
+  main.flex-1.ml-72 {
     margin-left: 0;
   }
 
-  .container {
+  /* Profile header adjustments */
+  .profile-header .flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Edit profile button position fix */
+  .mt-\[-8rem\] {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Container padding adjustment */
+  .container.mx-auto {
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
-  .health-card img.w-full {
-    height: 200px;
-  }
-}
-
-@media screen and (max-width: 640px) {
-  header .flex {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  header .flex .items-center {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .health-card .flex {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  #checkupModal .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  aside.w-80 {
-    width: 100%;
-    position: static;
-    height: auto;
-  }
-
-  .flex.min-h-screen {
-    flex-wrap: wrap;
-  }
-
-  main.flex-1 {
-    margin-left: 18rem;
-    width: calc(100% - 18rem);
-  }
-}
-
-/* Animations */
-@keyframes slide-in {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-.animate-slide-in {
-  animation: slide-in 0.3s ease-out forwards;
-}
-
-/* Hover Effects */
-.gradient-bg {
-  background: linear-gradient(to right, #3B82F6, #2563EB);
-}
-
-.gradient-hover:hover {
-  background: linear-gradient(to right, #2563EB, #1D4ED8);
-}
-
-/* Transitions */
-.transition-all {
-  transition: all 0.3s ease;
-}
-
-.transform {
-  transition: transform 0.3s ease;
-}
-
-/* my profile query */
-
-/* Base styles */
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.animate-slide-in {
-  animation: slideIn 0.3s ease-out;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-/* Modal Animation */
-.modal {
-  transition: opacity 0.3s ease-in-out;
-}
-
-/* Responsive Styles */
-@media screen and (max-width: 1280px) {
-  .container {
-    max-width: 100%;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .flex.min-h-screen {
-    flex-direction: column;
-  }
-
-  aside.w-72 {
-    position: static;
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid #1E293B;
-  }
-
-  main.flex-1 {
-    margin-left: 0;
-  }
-
+  /* Profile information cards */
   .grid.grid-cols-1.md\:grid-cols-2 {
     grid-template-columns: 1fr;
   }
+
+  /* Modal adjustments */
+  #editModal .m-auto {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+
+  /* Form fields in modal */
+  #editModal .grid.grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 480px) {
+  /* Header adjustments */
   header .flex {
     flex-direction: column;
     gap: 1rem;
     align-items: stretch;
   }
 
-  header button {
-    width: 100%;
-  }
-
-  .profile-header .flex {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profile-header button {
-    margin-top: 1rem;
-    width: 100%;
-  }
-
-  .emergency-contacts .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media screen and (max-width: 640px) {
-  .modal .bg-dark-100 {
-    margin: 0;
-    min-height: 100%;
-    border-radius: 0;
-  }
-
-  .modal form {
-    padding: 1rem;
-  }
-
-  .modal .grid {
-    gap: 1rem;
-  }
-
-  .profile-image {
+  /* Profile image size adjustment */
+  .w-40.h-40 {
     width: 120px;
     height: 120px;
   }
 
-  .health-status .flex {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+  /* Status badges adjustment */
+  .flex.flex-wrap.gap-3 {
+    justify-content: center;
+  }
+
+  /* Emergency contacts spacing */
+  .space-y-4 > * {
+    margin-bottom: 1rem;
+  }
+
+  /* Modal padding adjustment */
+  #editModal .p-8 {
+    padding: 1rem;
   }
 }
 
-/* Dark Mode Styles */
-.dark {
-  background-color: #0F172A;
-  color: #F3F4F6;
+/* Animation classes */
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
 }
 
-.dark .bg-dark-100 {
-  background-color: #1E293B;
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
 }
 
-.dark .border-gray-800 {
-  border-color: #1E293B;
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-/* Hover Effects */
-.gradient-bg {
-  background: linear-gradient(to right, #3B82F6, #2563EB);
-}
-
-.gradient-hover:hover {
-  background: linear-gradient(to right, #2563EB, #1D4ED8);
-}
-
-/* Transitions */
-.transition-all {
-  transition: all 0.3s ease;
-}
-
-.transform {
-  transition: transform 0.3s ease;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

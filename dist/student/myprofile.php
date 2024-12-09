@@ -97,28 +97,26 @@ if (isset($_POST['submit'])) {
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="bg-dark-200 text-gray-100">
-    <div class="flex min-h-screen">
+<body class="bg-gradient-to-br from-dark-200 to-dark-100 text-gray-100 min-h-screen">
+    <div class="flex flex-col lg:flex-row min-h-screen">
         <!-- Sidebar -->
-        <aside class="w-72 bg-dark-100 border-r border-gray-800 fixed h-full animate-slide-in">
-            <div class="p-6">
-                <div class="text-center mb-8">
-                    <div class="relative inline-block">
+        <aside class="w-full lg:w-72 bg-dark-100/95 backdrop-blur-md border-r border-gray-800 lg:fixed h-auto lg:h-full animate-slide-in">
+            <div class="p-4 lg:p-6">
+                <div class="text-center mb-6 lg:mb-8">
+                    <div class="relative inline-block group">
                         <img src="<?php echo !empty($user_data['u_image']) ? htmlspecialchars($user_data['u_image']) : '/uploads/profiles/'; ?>"
-                            class="w-40 h-40 rounded-full object-cover border-4 border-blue-500">
+                            class="w-32 h-32 lg:w-40 lg:h-40 rounded-full object-cover border-4 border-blue-500 transition-transform duration-300 group-hover:scale-105">
                     </div>
 
-                    <h4 class="text-xl font-bold">
+                    <h4 class="text-lg lg:text-xl font-bold mt-3">
                         <?php echo htmlspecialchars($user_name); ?>
                     </h4>
                     <p class="text-gray-400">
                         <?php echo htmlspecialchars($grade); ?>
                     </p>
-                    <div
-                        class="mt-3 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-400">
+                    <div class="mt-3 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-400 backdrop-blur-sm border border-green-500/30">
                         <span class="w-2 h-2 mr-2 rounded-full bg-green-400"></span>
                         <?php echo htmlspecialchars($health_status); ?>
                     </div>
@@ -126,23 +124,23 @@ if (isset($_POST['submit'])) {
 
                 <nav class="space-y-2">
                     <a href="student.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg gradient-bg text-white gradient-hover">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-newspaper"></i>
                         <span>News Feed</span>
                     </a>
                     <a href="myprofile.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg gradient-bg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-user"></i>
                         <span>My Profile</span>
                     </a>
                     <a href="health-history.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-history"></i>
                         <span>Health History</span>
-                        <span class="ml-auto bg-primary-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                        <span class="ml-auto bg-blue-600 text-white text-xs px-2 py-1 rounded-full">3</span>
                     </a>
                     <a href="../auth/login.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
                     </a>
@@ -151,12 +149,12 @@ if (isset($_POST['submit'])) {
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 ml-72">
+        <main class="flex-1 lg:ml-72">
             <!-- Top Navigation -->
-            <header class="bg-dark-100 border-b border-gray-800 px-6 py-4">
-                <div class="flex items-center justify-between">
+            <header class="bg-dark-100/95 backdrop-blur-md border-b border-gray-800 px-4 lg:px-6 py-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <h1 class="text-2xl font-bold">My Profile</h1>
-                    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
+                    <button class="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg transition-all duration-300 transform hover:-translate-y-0.5">
                         <i class="fas fa-plus mr-2"></i>Request Check-up
                     </button>
                 </div>
@@ -165,30 +163,31 @@ if (isset($_POST['submit'])) {
             <div class="container mx-auto px-6 py-8">
                 <div class="max-w-4xl mx-auto">
                     <!-- Profile Header -->
-                    <div class="bg-dark-100 rounded-xl p-8 mb-6 animate-fade-in">
-                        <div class="flex flex-col md:flex-row items-center">
-                            <div class="relative inline-block">
+                    <div class="bg-dark-100/95 backdrop-blur-md rounded-xl p-6 lg:p-8 mb-6 animate-fade-in">
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <div class="relative group">
                                 <img src="<?php echo !empty($user_data['u_image']) ? htmlspecialchars($user_data['u_image']) : '/uploads/profiles/'; ?>"
-                                    class="w-40 h-40 rounded-full object-cover border-4 border-blue-500">
+                                    class="w-32 h-32 lg:w-40 lg:h-40 rounded-full object-cover border-4 border-blue-500 transition-transform duration-300 group-hover:scale-105">
                             </div>
                             <div class="text-center md:text-left flex-1">
-                                <h2 class="text-3xl font-bold mb-2">
+                                <h2 class="text-2xl lg:text-3xl font-bold mb-2">
                                     <?php echo htmlspecialchars($user_name); ?>
                                 </h2>
                                 <p class="text-gray-400 mb-4">
                                     <?php echo htmlspecialchars($user_id); ?>
                                 </p>
                                 <div class="flex flex-wrap justify-center md:justify-start gap-3">
-                                    <span class="px-4 py-2 bg-dark-300 rounded-lg text-blue-400">
-                                        <i class="fas fa-graduation-cap mr-2"></i> <?php echo htmlspecialchars($grade); ?>
+                                    <span class="px-4 py-2 bg-dark-300/50 backdrop-blur-sm rounded-lg text-blue-400 border border-blue-400/20">
+                                        <i class="fas fa-graduation-cap mr-2"></i><?php echo htmlspecialchars($grade); ?>
                                     </span>
-                                    <span class="px-4 py-2 bg-dark-300 rounded-lg text-green-400">
-                                        <i class="fas fa-heart mr-2"></i> <?php echo htmlspecialchars($health_status); ?>
+                                    <span class="px-4 py-2 bg-dark-300/50 backdrop-blur-sm rounded-lg text-green-400 border border-green-400/20">
+                                        <i class="fas fa-heart mr-2"></i><?php echo htmlspecialchars($health_status); ?>
                                     </span>
                                 </div>
                             </div>
-                            <button onclick="openEditModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center mt-[-8rem]">
-                                <i class="fas fa-edit mr-2"></i>
+                            <button onclick="openEditModal()"
+                                class="w-full md:w-auto bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 transform hover:-translate-y-0.5">
+                                <i class="fas fa-edit"></i>
                                 Edit Profile
                             </button>
                         </div>
