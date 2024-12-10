@@ -229,36 +229,6 @@ if (isset($_POST['submit'])) {
 
             <main class="flex-1 overflow-y-auto">
                 <div class="p-8">
-                    <div class="bg-dark-800 rounded-xl shadow-sm p-6 mb-6 fade-in">
-                        <div class="flex flex-wrap gap-4 items-center justify-between">
-                            <div class="flex-1 min-w-[200px]">
-                                <div class="relative">
-                                    <input type="text"
-                                        placeholder="Search patients..."
-                                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-700 bg-dark-900 text-white focus:outline-none focus:ring-2 focus:ring-primary-500">
-                                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-                                </div>
-                            </div>
-                            <div class="flex flex-wrap gap-4">
-                                <select class="px-4 py-2 rounded-lg border border-gray-700 bg-dark-900 text-white">
-                                    <option value="">All Categories</option>
-                                    <option value="urgent">Urgent</option>
-                                    <option value="routine">Routine</option>
-                                    <option value="follow-up">Follow-up</option>
-                                </select>
-                                <select class="px-4 py-2 rounded-lg border border-gray-700 bg-dark-900 text-white">
-                                    <option value="">All Times</option>
-                                    <option value="morning">Morning</option>
-                                    <option value="afternoon">Afternoon</option>
-                                    <option value="evening">Evening</option>
-                                </select>
-                                <button class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600">
-                                    <i class="fas fa-filter mr-2"></i>Apply Filters
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="space-y-4">
                         <div class="bg-dark-800 rounded-xl shadow-sm p-6 mb-6 fade-in">
                             <h2 class="text-xl font-bold text-red-500 mb-4">Urgent Cases</h2>

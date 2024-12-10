@@ -27,6 +27,47 @@ $result2 = $stmt2->get_result();
 $check_up_data = $result2->fetch_assoc();
 $stmt2->close();
 
+// Get total checkups
+$stmt = $conn->prepare("SELECT COUNT(*) as total_checkups FROM check_up");
+$stmt->execute();
+$result = $stmt->get_result();
+$total_checkups = $result->fetch_assoc()['total_checkups'];
+$stmt->close();
+
+// Get total completed check-ups
+$stmt = $conn->prepare("SELECT COUNT(*) as completed_checkups FROM check_up WHERE c_status = 'completed'");
+$stmt->execute();
+$result = $stmt->get_result();
+$completed_checkups = $result->fetch_assoc()['completed_checkups'];
+$stmt->close();
+
+// Get pending cases
+$stmt = $conn->prepare("SELECT COUNT(*) as pending_cases FROM check_up WHERE c_status = ?");
+$status = 'pending';
+$stmt->bind_param("s", $status);
+$stmt->execute();
+$result = $stmt->get_result();
+$pending_cases = $result->fetch_assoc()['pending_cases'];
+$stmt->close();
+
+// Get total student accounts
+$stmt = $conn->prepare("SELECT COUNT(*) as total_students FROM user WHERE u_type = 'student'");
+$stmt->execute();
+$result = $stmt->get_result();
+$total_students = $result->fetch_assoc()['total_students'];
+$stmt->close();
+
+// Get recent completed appointments
+$stmt = $conn->prepare("SELECT c.*, u.u_fn, u.u_image 
+                       FROM check_up c 
+                       JOIN user u ON c.u_id = u.u_id 
+                       WHERE c.c_status = 'completed' 
+                       ORDER BY c.c_pd DESC 
+                       LIMIT 5");
+$stmt->execute();
+$recent_appointments = $stmt->get_result();
+$stmt->close();
+
 $conn->close();
 
 $next_checkup = $check_up_data['c_nc'] ?? 'N/A';
@@ -157,8 +198,8 @@ if (isset($_POST['submit'])) {
                                     <i class="fas fa-arrow-up text-xs mr-1"></i>8%
                                 </span>
                             </div>
-                            <h3 class="text-3xl font-bold text-white mb-1">12</h3>
-                            <p class="text-blue-100">Today's Appointments</p>
+                            <h3 class="text-3xl font-bold text-white mb-1"><?php echo $total_checkups; ?></h3>
+                            <p class="text-blue-100">Total Check Ups</p>
                         </div>
                     </div>
 
@@ -170,10 +211,10 @@ if (isset($_POST['submit'])) {
                                     <i class="fas fa-check-circle text-white text-xl"></i>
                                 </div>
                                 <span class="flex items-center text-white bg-white/10 rounded-full px-2 py-1 text-xs">
-                                    <i class="fas fa-arrow-up text-xs mr-1"></i>12%
+                                    <i class="fas fa-arrow-up text-xs mr-1"></i><?php echo $completed_checkups; ?>
                                 </span>
                             </div>
-                            <h3 class="text-3xl font-bold text-white mb-1">45</h3>
+                            <h3 class="text-3xl font-bold text-white mb-1"><?php echo $completed_checkups; ?></h3>
                             <p class="text-emerald-100">Completed Checkups</p>
                         </div>
                     </div>
@@ -186,10 +227,10 @@ if (isset($_POST['submit'])) {
                                     <i class="fas fa-clock text-white text-xl"></i>
                                 </div>
                                 <span class="flex items-center text-white bg-white/10 rounded-full px-2 py-1 text-xs">
-                                    <i class="fas fa-arrow-down text-xs mr-1"></i>5%
+                                    <i class="fas fa-arrow-down text-xs mr-1"></i><?php echo $pending_cases; ?>
                                 </span>
                             </div>
-                            <h3 class="text-3xl font-bold text-white mb-1">8</h3>
+                            <h3 class="text-3xl font-bold text-white mb-1"></i><?php echo $pending_cases; ?></h3>
                             <p class="text-amber-100">Pending Cases</p>
                         </div>
                     </div>
@@ -205,7 +246,7 @@ if (isset($_POST['submit'])) {
                                     <i class="fas fa-arrow-up text-xs mr-1"></i>3%
                                 </span>
                             </div>
-                            <h3 class="text-3xl font-bold text-white mb-1">520</h3>
+                            <h3 class="text-3xl font-bold text-white mb-1"><?php echo $total_students; ?></h3>
                             <p class="text-violet-100">Total Students</p>
                         </div>
                     </div>
@@ -215,11 +256,6 @@ if (isset($_POST['submit'])) {
                     <div class="lg:col-span-2 bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-white">Monthly Checkup Statistics</h3>
-                            <div class="flex items-center space-x-2">
-                                <button class="px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-700 text-gray-300">Week</button>
-                                <button class="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-900/50 text-blue-100">Month</button>
-                                <button class="px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-700 text-gray-300">Year</button>
-                            </div>
                         </div>
                         <div class="h-[300px]">
                             <canvas id="checkupStats"></canvas>
@@ -229,9 +265,6 @@ if (isset($_POST['submit'])) {
                     <div class="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-white">Common Health Issues</h3>
-                            <button class="text-gray-400 hover:text-gray-300">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
                         </div>
                         <div class="h-[300px]">
                             <canvas id="healthIssues"></canvas>
@@ -258,27 +291,29 @@ if (isset($_POST['submit'])) {
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-700">
-                                    <tr class="hover:bg-gray-700/50 transition-colors duration-200">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <img class="h-8 w-8 rounded-full object-cover"
-                                                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=32&q=80"
-                                                    alt="">
-                                                <div class="ml-4">
-                                                    <div class="text-sm font-medium text-white">John Doe</div>
-                                                    <div class="text-sm text-gray-400">ID: 12345</div>
+                                    <?php while ($row = $recent_appointments->fetch_assoc()): ?>
+                                        <tr class="hover:bg-gray-700/50 transition-colors duration-200">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <img class="h-8 w-8 rounded-full object-cover"
+                                                        src="<?php echo !empty($row['u_image']) ? htmlspecialchars($row['u_image']) : 'default-profile.jpg'; ?>"
+                                                        alt="">
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-white"><?php echo htmlspecialchars($row['u_fn']); ?></div>
+                                                        <div class="text-sm text-gray-400">ID: <?php echo htmlspecialchars($row['u_id']); ?></div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">2023-10-25</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">09:00 AM</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/50 text-green-300">
-                                                <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-green-400"></span>
-                                                Completed
-                                            </span>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300"><?php echo date('Y-m-d', strtotime($row['c_pd'])); ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300"><?php echo date('h:i A', strtotime($row['c_pd'])); ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/50 text-green-300">
+                                                    <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-green-400"></span>
+                                                    Completed
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
                                 </tbody>
                             </table>
                         </div>

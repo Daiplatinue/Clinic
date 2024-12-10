@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT u_fn, u_bt, u_grade, u_hs, u_h, u_gender, u_allergy, u_age, u_pc, u_sc, u_pcn, u_scn ,u_image FROM user WHERE u_id = ?");
+$stmt = $conn->prepare("SELECT u_fn, u_email, u_bt, u_grade, u_hs, u_h, u_gender, u_allergy, u_age, u_image FROM user WHERE u_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -32,6 +32,7 @@ $conn->close();
 $next_checkup = $check_up_data['c_nc'] ?? 'N/A';
 $last_checkup = $check_up_data['c_lc'] ?? 'N/A';
 $user_name = $user_data['u_fn'] ?? 'User';
+$email = $user_data['u_email'] ?? 'N/A';
 $blood_type = $user_data['u_bt'] ?? 'N/A';
 $grade = $user_data['u_grade'] ?? 'N/A';
 $health_status = $user_data['u_hs'] ?? 'N/A';
@@ -69,7 +70,7 @@ if (isset($_POST['submit'])) {
     $query->close();
 }
 
-?>
+?>  
 
 <!DOCTYPE html>
 <html lang="en">
@@ -99,7 +100,7 @@ if (isset($_POST['submit'])) {
     </script>
 </head>
 
-<body class="bg-gradient-to-br from-dark-200 to-dark-100 text-gray-100 min-h-screen">
+<body class="bg-dark-200 text-gray-100">
     <div class="flex flex-col lg:flex-row min-h-screen">
         <!-- Sidebar -->
         <aside class="w-full lg:w-72 bg-dark-100/95 backdrop-blur-md border-r border-gray-800 lg:fixed h-auto lg:h-full animate-slide-in">
@@ -124,20 +125,19 @@ if (isset($_POST['submit'])) {
 
                 <nav class="space-y-2">
                     <a href="student.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:translate-x-1">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-newspaper"></i>
                         <span>News Feed</span>
                     </a>
                     <a href="myprofile.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-user"></i>
                         <span>My Profile</span>
                     </a>
                     <a href="health-history.php"
                         class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-history"></i>
-                        <span>Health History</span>
-                        <span class="ml-auto bg-blue-600 text-white text-xs px-2 py-1 rounded-full">3</span>
+                        <span>Notifications</span>
                     </a>
                     <a href="../auth/login.php"
                         class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
@@ -154,9 +154,6 @@ if (isset($_POST['submit'])) {
             <header class="bg-dark-100/95 backdrop-blur-md border-b border-gray-800 px-4 lg:px-6 py-4">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <h1 class="text-2xl font-bold">My Profile</h1>
-                    <button class="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg transition-all duration-300 transform hover:-translate-y-0.5">
-                        <i class="fas fa-plus mr-2"></i>Request Check-up
-                    </button>
                 </div>
             </header>
 
@@ -233,18 +230,6 @@ if (isset($_POST['submit'])) {
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-400">
                                         <span class="w-2 h-2 mr-2 rounded-full bg-green-400"></span>
                                         <?php echo htmlspecialchars($health_status); ?>
-                                    </span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400">Last Check-up</span>
-                                    <span class="font-medium">
-                                        <?php echo htmlspecialchars($last_checkup); ?>
-                                    </span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400">Next Check-up</span>
-                                    <span class="font-medium text-blue-500">
-                                        <?php echo htmlspecialchars($next_checkup); ?>
                                     </span>
                                 </div>
                                 <div class="flex justify-between items-center">

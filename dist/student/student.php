@@ -109,21 +109,21 @@ if (isset($_POST['submit'])) {
 <body class="bg-dark-200 text-gray-100">
     <div class="flex min-h-screen">
         <!-- Animated Sidebar -->
-        <aside class="w-72 bg-dark-100 border-r border-gray-800 fixed h-full animate-slide-in">
-            <div class="p-6">
-                <div class="text-center mb-8">
-                    <div class="relative inline-block">
+        <aside class="w-full lg:w-72 bg-dark-100/95 backdrop-blur-md border-r border-gray-800 lg:fixed h-auto lg:h-full animate-slide-in">
+            <div class="p-4 lg:p-6">
+                <div class="text-center mb-6 lg:mb-8">
+                    <div class="relative inline-block group">
                         <img src="<?php echo !empty($user_data['u_image']) ? htmlspecialchars($user_data['u_image']) : '/uploads/profiles/'; ?>"
-                            class="w-40 h-40 rounded-full object-cover border-4 border-blue-500">
+                            class="w-32 h-32 lg:w-40 lg:h-40 rounded-full object-cover border-4 border-blue-500 transition-transform duration-300 group-hover:scale-105">
                     </div>
-                    <h4 class="text-xl font-bold">
+
+                    <h4 class="text-lg lg:text-xl font-bold mt-3">
                         <?php echo htmlspecialchars($user_name); ?>
                     </h4>
                     <p class="text-gray-400">
                         <?php echo htmlspecialchars($grade); ?>
                     </p>
-                    <div
-                        class="mt-3 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-400">
+                    <div class="mt-3 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-400 backdrop-blur-sm border border-green-500/30">
                         <span class="w-2 h-2 mr-2 rounded-full bg-green-400"></span>
                         <?php echo htmlspecialchars($health_status); ?>
                     </div>
@@ -131,23 +131,22 @@ if (isset($_POST['submit'])) {
 
                 <nav class="space-y-2">
                     <a href="student.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg gradient-bg text-white gradient-hover">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-newspaper"></i>
                         <span>News Feed</span>
                     </a>
                     <a href="myprofile.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-user"></i>
                         <span>My Profile</span>
                     </a>
                     <a href="health-history.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-history"></i>
-                        <span>Health History</span>
-                        <span class="ml-auto bg-primary-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                        <span>Notifications</span>
                     </a>
                     <a href="../auth/login.php"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark-400 text-gray-400 hover:text-white transition-all duration-300 transform hover:translate-x-1">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
                     </a>
@@ -167,13 +166,6 @@ if (isset($_POST['submit'])) {
                             <i class="fas fa-calendar-plus mr-2"></i>
                             Request Check-up
                         </button>
-                        <div class="relative">
-                            <button class="text-gray-400 hover:text-white">
-                                <i class="fas fa-bell text-xl"></i>
-                                <span
-                                    class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </header>
@@ -212,10 +204,6 @@ if (isset($_POST['submit'])) {
                                 <button class="flex items-center space-x-2 hover:text-primary-500 transition-colors">
                                     <i class="far fa-thumbs-up"></i>
                                     <span class="animate-number" data-target="24">0</span>
-                                </button>
-                                <button class="flex items-center space-x-2 hover:text-primary-500 transition-colors">
-                                    <i class="far fa-comment"></i>
-                                    <span class="animate-number" data-target="8">0</span>
                                 </button>
                             </div>
                             <button class="hover:text-primary-500 transition-colors">
@@ -258,10 +246,6 @@ if (isset($_POST['submit'])) {
                                     <i class="far fa-thumbs-up"></i>
                                     <span class="animate-number" data-target="42">0</span>
                                 </button>
-                                <button class="flex items-center space-x-2 hover:text-primary-500 transition-colors">
-                                    <i class="far fa-comment"></i>
-                                    <span class="animate-number" data-target="15">0</span>
-                                </button>
                             </div>
                             <button class="hover:text-primary-500 transition-colors">
                                 <i class="far fa-bookmark"></i>
@@ -296,12 +280,6 @@ if (isset($_POST['submit'])) {
                         <h3 class="text-sm text-gray-400 mb-2">Height</h3>
                         <p class="text-3xl font-bold text-white">
                             <?php echo htmlspecialchars($height); ?>
-                        </p>
-                    </div>
-                    <div class="health-card bg-dark-300 rounded-lg p-4 hover:bg-dark-400 transition-colors">
-                        <h3 class="text-sm text-gray-400 mb-2">Next Check-up</h3>
-                        <p class="text-xl font-bold text-primary-500">
-                            <?php echo htmlspecialchars($next_checkup); ?>
                         </p>
                     </div>
                 </div>
